@@ -1,8 +1,8 @@
 # Obsidian VisionJam Theme
 
-> 9 个 CSS 片段 + 示例笔记 + GitHub Theme 副本，为 GitHub Theme 深色模式设计。
+> 9 个 CSS 片段 + 示例笔记 + 11 个 Templater 模板 + GitHub Theme 副本，为 GitHub Theme 深色模式设计。
 >
-> Nine CSS snippets, example notes, and a bundled copy of GitHub Theme for a purple-accented Obsidian dashboard.
+> Nine CSS snippets, example notes, 11 Templater templates, and a bundled copy of GitHub Theme for a purple-accented Obsidian dashboard.
 
 ## 预览
 
@@ -16,6 +16,7 @@
 | --- | --- |
 | `snippets/` | 9 个 CSS 片段：主页、索引页、标题、引用、标签、链接、属性、侧栏编号、折叠箭头 |
 | `examples/` | 主页和索引页的示例笔记，含 Dataview / DataviewJS 查询 |
+| `templates/` | 11 个 Templater 模板：日记、周记、月记、季记、年记、健康、博客、随想、人物、书籍、视频 |
 | `themes/GitHub Theme/` | GitHub Theme 1.1.6 副本（MIT），方便一次下载 |
 | `screenshots/` | 截图位 |
 | `LICENSE` | 本仓库原创代码的 MIT 许可证 |
@@ -25,7 +26,8 @@
 
 - Obsidian 1.6 或更高版本；
 - GitHub Theme 1.1.6（可选，仓库里带了一份）；
-- Dataview（主页示例需要，且要在设置里启用 DataviewJS）；
+- Templater（使用 `templates/` 里的模板需要）；
+- Dataview（主页示例和模板里的查询需要，且要在设置里启用 DataviewJS）；
 - Simple Columns（可选，多栏 callout 需要）；
 - Style Settings（可选，调 GitHub Theme 的选项）。
 
@@ -73,6 +75,17 @@ cssclasses:
 
 其中 `Sidebar-Numbering.css` 会给大纲和文件浏览器加层级编号；不想要就单独关掉它。
 
+### 模板（Templater）
+
+`templates/Templater/` 是文章里那 11 个模板：日记、周记、月记、季记、年记、健康、博客、随想、人物、书籍、视频。安装、依赖、落位脚本和已知坑都写在 [`templates/README.md`](templates/README.md)。
+
+最短路径：
+
+1. 安装 Templater 和 Dataview；
+2. 把 `templates/Templater/` 复制到 vault 根目录；
+3. 把每个模板里的 `TARGET_DIR` 改成你的目录；
+4. 在 Templater 设置里配置文件夹模板，并在每台设备上打开 “Trigger Templater on new file creation”。
+
 ## 自定义
 
 - 主色是 `#7c3aed`，hover 是 `#8b5cf6`；搜索替换即可换色；
@@ -91,7 +104,7 @@ cssclasses:
 
 ## 来源与许可证
 
-- 本仓库原创的 CSS 和示例笔记使用 MIT 许可证，见 `LICENSE`。
+- 本仓库原创的 CSS、示例笔记和 Templater 模板使用 MIT 许可证，见 `LICENSE`。
 - GitHub Theme 由 [krios2146](https://github.com/krios2146/obsidian-theme-github) 开发，MIT 许可，Copyright 2023 Vladimir Kidyaev。`themes/GitHub Theme/` 里的副本为了方便下载而内置，许可证见该目录下的 `LICENSE`。
 - 部分片段的设计参考过 Klaas 的 Obsidian CSS snippets 合集；本仓库里的公开版本是重写的，没有直接复制原代码。详见 `NOTICE.md`。
 - Obsidian 是 Dynalist Inc. 的商标；本仓库与官方无关。
