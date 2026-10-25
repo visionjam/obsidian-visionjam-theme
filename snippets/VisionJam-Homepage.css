@@ -1,0 +1,540 @@
+/*
+VisionJam-Homepage.css — dashboard styling for GitHub Theme (dark)
+
+Author: VisionJam
+License: MIT
+Requires: add `cssclasses: dashboard` to the note's frontmatter
+Designed for: Obsidian 1.6+, GitHub Theme 1.1.6
+
+The dashboard examples in `examples/dashboard.md` generate the
+`.vj-banner`, `.vj-stats`, `.vj-bar-*` classes used below.
+*/
+
+/* ===== 1. 内容区 — 纯色底衬 ===== */
+.dashboard .markdown-preview-section {
+  background: #1a1b2e !important;
+  border-radius: 20px;
+  padding: 2em 2.5em !important;
+  margin: 1.2em;
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* ===== 2. 笔记属性 (GitHub 简约 + 紫色标签) ===== */
+.dashboard .metadata-property-key,
+.dashboard .metadata-property-label {
+  color: #d2a8ff !important;
+  font-weight: 600 !important;
+}
+
+/* ===== 3. 文字颜色 ===== */
+/* 不设全局覆盖，由主题和下方具体设计色处理 */
+
+/* ===== 4. 标题 ===== */
+.dashboard .inline-title {
+  font-size: 3em;
+  font-weight: 800;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4, #f59e0b, #7c3aed);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: vj-shimmer 6s ease infinite;
+  text-align: center;
+  padding: 0.4em 0 0.15em;
+  letter-spacing: -0.02em;
+  text-shadow: none;
+}
+
+@keyframes vj-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.dashboard .inline-title::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 3px;
+  margin: 0.5em auto 0.8em;
+  background: linear-gradient(90deg, transparent, #7c3aed, #06b6d4, #f59e0b, #7c3aed, transparent);
+  background-size: 200% 100%;
+  animation: vj-line-flow 4s linear infinite;
+  border-radius: 3px;
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+}
+
+@keyframes vj-line-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.dashboard h1 {
+  font-size: 1.9em;
+  font-weight: 700;
+  color: #a78bfa;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+  padding-bottom: 0.35em;
+  margin: 1.8em 0 0.8em;
+  display: inline-block;
+}
+
+.dashboard h2 {
+  font-size: 1.45em;
+  font-weight: 700;
+  color: #818cf8;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.15);
+  padding-bottom: 0.3em;
+  margin: 1.5em 0 0.7em;
+  display: inline-block;
+}
+
+.dashboard h3 {
+  font-size: 1.15em;
+  font-weight: 650;
+  color: #c4b5fd;
+  margin: 1.2em 0 0.5em;
+}
+
+.dashboard h4 {
+  font-size: 1.02em;
+  font-weight: 650;
+  color: #67e8f9;
+  margin: 1em 0 0.3em;
+}
+
+/* ===== 5. Dataview 表格 ===== */
+.dashboard .dataview.table-view-table > thead {
+  display: none;
+}
+
+.dashboard .dataview.table-view-table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  width: 100%;
+}
+
+.dashboard .dataview.table-view-table > tbody > tr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(124, 58, 237, 0.06);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  border-left: 3px solid #7c3aed;
+  border-radius: 12px;
+  padding: 0.7em 1.2em;
+  transition: all 0.3s ease;
+  backdrop-filter: none;
+}
+
+.dashboard .dataview.table-view-table > tbody > tr:hover {
+  background: rgba(124, 58, 237, 0.12);
+  border-color: rgba(124, 58, 237, 0.25);
+  transform: translateX(6px);
+  box-shadow: 4px 4px 16px rgba(124, 58, 237, 0.12);
+}
+
+.dashboard .dataview.table-view-table > tbody > tr > td {
+  border: none;
+  padding: 0;
+  background: transparent;
+}
+
+.dashboard .dataview.table-view-table > tbody > tr > td:first-child,
+.dashboard .dataview.table-view-table > tbody > tr > td:first-child a {
+  font-weight: 650;
+  color: #a78bfa !important;
+  font-size: 1em;
+}
+
+.dashboard .dataview.table-view-table > tbody > tr > td:last-child {
+  /* 颜色由全局文字规则统一处理 */
+}
+
+/* ===== 6. 索引中心 — 导航卡片 ===== */
+.dashboard [class*="internal-link"] {
+  display: block !important;
+  padding: 0.85em !important;
+  margin: 0.45em 0 !important;
+  background: rgba(124, 58, 237, 0.05) !important;
+  background-image: linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(6, 182, 212, 0.04)) !important;
+  border: 1px solid rgba(124, 58, 237, 0.1) !important;
+  border-left: 3px solid #7c3aed !important;
+  border-radius: 14px !important;
+  text-decoration: none !important;
+  text-align: center !important;
+  font-weight: 650 !important;
+  font-size: 1em !important;
+  color: #ddd6fe !important;
+  letter-spacing: 0.01em !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dashboard [class*="internal-link"]:hover {
+  background: rgba(124, 58, 237, 0.12) !important;
+  border-color: rgba(124, 58, 237, 0.3) !important;
+  border-left-color: #a78bfa !important;
+  border-left-width: 4px !important;
+  transform: translateX(5px) !important;
+  color: #e6edf3 !important;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15) !important;
+}
+
+/* ===== 7. 查询块 (query block) ===== */
+/* 不覆盖样式，使用主题默认渲染，与其他页面一致 */
+
+/* ===== 8. 分割线 ===== */
+.dashboard hr {
+  margin: 2em 0;
+  border: none;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, #7c3aed, #06b6d4, #f59e0b, transparent);
+  background-size: 200% 100%;
+  animation: vj-line-flow 5s linear infinite;
+  opacity: 0.35;
+  border-radius: 2px;
+}
+
+/* ===== 9. 引用块 ===== */
+.dashboard blockquote {
+  border-left: 3px solid #7c3aed;
+  background: rgba(124, 58, 237, 0.04);
+  padding: 0.6em 1.2em;
+  border-radius: 0 10px 10px 0;
+  color: #c4b5fd;
+}
+
+/* ===== 10. Callout ===== */
+.dashboard .callout {
+  background: rgba(124, 58, 237, 0.05) !important;
+  border: 1px solid rgba(124, 58, 237, 0.12) !important;
+  border-radius: 12px !important;
+}
+
+.dashboard .callout .callout-title {
+  color: #a78bfa !important;
+  font-weight: 600;
+}
+
+.dashboard .callout .callout-icon svg {
+  color: #a78bfa !important;
+}
+
+/* ===== 11. 标签 ===== */
+.dashboard .tag {
+  font-size: 0.78em;
+  border-radius: 6px;
+  padding: 0.15em 0.7em;
+  background: rgba(124, 58, 237, 0.1);
+  color: #c4b5fd;
+  border: 1px solid rgba(124, 58, 237, 0.18);
+  transition: all 0.2s ease;
+}
+
+.dashboard .tag:hover {
+  background: rgba(124, 58, 237, 0.2);
+  color: #e0d5ff;
+}
+
+/* ===== 12. 代码块 ===== */
+.dashboard pre {
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  border-radius: 10px;
+  background: #0f0f1e !important;
+}
+
+.dashboard code {
+  color: #67e8f9 !important;
+  background: rgba(103, 232, 249, 0.08);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+/* ===== 13. 复选框 ===== */
+.dashboard input[type="checkbox"] {
+  border-color: rgba(124, 58, 237, 0.3);
+  background: transparent;
+}
+
+.dashboard input[type="checkbox"]:checked {
+  background-color: #7c3aed;
+  border-color: #7c3aed;
+}
+
+/* ===== 14. 嵌入 ===== */
+.dashboard .internal-embed,
+.dashboard .embed-container {
+  border-left: 2px solid #7c3aed;
+  border-radius: 0 10px 10px 0;
+  padding: 0.8em 1.2em;
+  background: rgba(124, 58, 237, 0.04);
+}
+
+/* ===== 16. Callout 按类型着色 ===== */
+.dashboard .callout[data-callout="quote"] {
+  border-left-color: #06b6d4 !important;
+}
+
+.dashboard .callout[data-callout="quote"] .callout-title {
+  color: #06b6d4 !important;
+}
+
+.dashboard .callout[data-callout="warning"],
+.dashboard .callout[data-callout="caution"] {
+  border-left-color: #f59e0b !important;
+}
+
+.dashboard .callout[data-callout="warning"] .callout-title,
+.dashboard .callout[data-callout="caution"] .callout-title {
+  color: #f59e0b !important;
+}
+
+.dashboard .callout[data-callout="tip"],
+.dashboard .callout[data-callout="success"],
+.dashboard .callout[data-callout="check"] {
+  border-left-color: #06b6d4 !important;
+}
+
+.dashboard .callout[data-callout="tip"] .callout-title,
+.dashboard .callout[data-callout="success"] .callout-title,
+.dashboard .callout[data-callout="check"] .callout-title {
+  color: #06b6d4 !important;
+}
+
+.dashboard .callout[data-callout="danger"],
+.dashboard .callout[data-callout="bug"],
+.dashboard .callout[data-callout="fail"] {
+  border-left-color: #ef4444 !important;
+}
+
+.dashboard .callout[data-callout="danger"] .callout-title,
+.dashboard .callout[data-callout="bug"] .callout-title,
+.dashboard .callout[data-callout="fail"] .callout-title {
+  color: #ef4444 !important;
+}
+
+.dashboard .callout[data-callout="example"],
+.dashboard .callout[data-callout="abstract"],
+.dashboard .callout[data-callout="summary"],
+.dashboard .callout[data-callout="todo"] {
+  border-left-color: #a78bfa !important;
+}
+
+.dashboard .callout[data-callout="example"] .callout-title,
+.dashboard .callout[data-callout="abstract"] .callout-title,
+.dashboard .callout[data-callout="summary"] .callout-title,
+.dashboard .callout[data-callout="todo"] .callout-title {
+  color: #a78bfa !important;
+}
+
+/* ===== 19. Dataview 列宽均分 ===== */
+.dashboard .dataview.table-view-table {
+  :has(> tbody > tr > :nth-child(2)) {
+    --dv-col-count: 2;
+  }
+  :has(> tbody > tr > :nth-child(3)) {
+    --dv-col-count: 3;
+  }
+  :has(> tbody > tr > :nth-child(4)) {
+    --dv-col-count: 4;
+  }
+}
+
+.dashboard .dataview.table-view-table > tbody > tr > * {
+  width: calc(100% / var(--dv-col-count, 2));
+}
+
+/* ===== 22. 分割线星号装饰 ===== */
+.dashboard hr {
+  position: relative;
+}
+
+.dashboard hr::after {
+  content: "✦";
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: #7c3aed;
+  padding: 0 0.6em;
+  background-color: #1a1b2e;
+}
+
+/* ===== 23. 统计卡片行 (dataviewjs .vj-stats) ===== */
+.dashboard .vj-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1em;
+  margin: 1.2em 0;
+}
+
+.dashboard .vj-stat {
+  background: rgba(124, 58, 237, 0.06) !important;
+  border: 1px solid rgba(124, 58, 237, 0.12) !important;
+  border-left: 3px solid #7c3aed !important;
+  border-radius: 14px !important;
+  padding: 1.1em 1em !important;
+  text-align: center !important;
+  transition: all 0.3s ease !important;
+}
+
+.dashboard .vj-stat:hover {
+  background: rgba(124, 58, 237, 0.12) !important;
+  border-color: rgba(124, 58, 237, 0.25) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.15) !important;
+}
+
+.dashboard .vj-stat-value {
+  display: block !important;
+  font-size: 2.1em !important;
+  font-weight: 800 !important;
+  color: #a78bfa !important;
+  line-height: 1.2 !important;
+}
+
+.dashboard .vj-stat-label {
+  display: block !important;
+  font-size: 0.85em !important;
+  color: #c9d1d9 !important;
+  margin-top: 0.3em !important;
+}
+
+/* ===== 24. 欢迎横幅 (dataviewjs .vj-banner) ===== */
+/* 温和设计：无卡片底、无高对比亮白，使用主题标准色（保护眼睛） */
+.dashboard .vj-banner {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0.6em 0 !important;
+  margin: 0.8em 0 !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+
+.dashboard .vj-banner-greet {
+  font-size: 1.45em !important;
+  font-weight: 650 !important;
+  color: #c9d1d9 !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.dashboard .vj-banner-date {
+  color: #8b949e !important;
+  font-size: 0.95em !important;
+  margin-top: 0.35em !important;
+}
+
+/* 横幅容器自身已带卡片样式，去掉外层 dataviewjs 容器边框 */
+.dashboard .dataviewjs:has(.vj-banner) {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* ===== 25. dataviewjs 容器 (统计卡 + 图表) ===== */
+.dashboard .dataviewjs {
+  background: rgba(124, 58, 237, 0.04) !important;
+  border: 1px solid rgba(124, 58, 237, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 0.8em 1em !important;
+  margin: 0.8em 0 !important;
+}
+
+/* ===== 27. dataviewjs 条形图 (.vj-bars) ===== */
+.dashboard .vj-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55em;
+  padding: 0.5em 0;
+}
+
+.dashboard .vj-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+}
+
+.dashboard .vj-bar-label {
+  width: 7em;
+  flex-shrink: 0;
+  font-size: 0.9em;
+  color: #c9d1d9;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard .vj-bar-track {
+  flex: 1;
+  height: 1.2em;
+  background: rgba(124, 58, 237, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dashboard .vj-bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+}
+
+.dashboard .vj-bar-fill.vj-bar-cyan {
+  background: linear-gradient(90deg, #06b6d4, #67e8f9);
+}
+
+.dashboard .vj-bar-value {
+  width: 3em;
+  flex-shrink: 0;
+  font-size: 0.9em;
+  font-weight: 650;
+  color: #a78bfa;
+}
+
+/* ===== 26. simple-columns 双列 ===== */
+.dashboard .callout[data-callout="multi-column"],
+.dashboard .callout[data-callout="column"] {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.dashboard .callout[data-callout="column"] .callout-title {
+  font-size: 1em !important;
+  font-weight: 650 !important;
+  color: #a78bfa !important;
+}
+
+.dashboard .callout[data-callout="column"] .callout-content {
+  padding: 0 !important;
+}
+
+/* ===== 响应式 ===== */
+/* 窄屏时统计卡 2 列、近期动态双列回退单列，其余样式移动端与桌面端一致 */
+@media (max-width: 600px) {
+  .dashboard .vj-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* simple-columns 双列 → 单列 */
+  .dashboard .markdown-columns-resizable {
+    display: block !important;
+    grid-template-columns: none !important;
+  }
+
+  .dashboard .markdown-columns-resizable > .column,
+  .dashboard .markdown-columns-resizable > .simple-columns > .column {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin-bottom: 1em !important;
+  }
+}

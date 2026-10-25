@@ -1,0 +1,62 @@
+/*
+Tags.css — tag pills for GitHub Theme (dark)
+
+Author: VisionJam
+License: MIT
+Designed for: Obsidian 1.6+, GitHub Theme 1.1.6
+
+Editor-mode selectors use CodeMirror 6 classes (Obsidian 1.6+).
+*/
+
+/* ---------- Reading view ---------- */
+
+.tag:not(.token) {
+  display: inline-block;
+  margin: 0 2px;
+  padding: 1px 10px 3px;
+  border: none;
+  border-radius: 15px;
+  background-color: #7c3aed !important;
+  color: #ffffff !important;
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tag:not(.token):hover {
+  background-color: #8b5cf6 !important;
+  color: #ffffff !important;
+}
+
+/* ---------- Live Preview / Source mode (CM6) ---------- */
+
+.cm-s-obsidian .cm-hashtag {
+  background-color: #7c3aed;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+.cm-s-obsidian .cm-hashtag-begin {
+  padding-left: 8px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.cm-s-obsidian .cm-hashtag-end {
+  padding-right: 8px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+/* ---------- Tag pane ---------- */
+
+.tag-pane-tag-count,
+.tag-pane-tag-text {
+  padding: 1px 8px;
+  border: none;
+  border-radius: 14px;
+  background-color: #7c3aed;
+  color: #ffffff !important;
+  font-size: 11px;
+}

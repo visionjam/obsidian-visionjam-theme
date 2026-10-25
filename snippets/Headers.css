@@ -1,0 +1,87 @@
+/*
+Headers.css — six-level heading colors for GitHub Theme (dark)
+
+Author: VisionJam
+License: MIT
+Designed for: Obsidian 1.6+, GitHub Theme 1.1.6
+
+The colors follow GitHub Theme's dark palette:
+  green  #7ee787
+  blue   #6CB6FF
+  purple #D2A8FF
+  cyan   #67e8f9
+  gold   #fbbf24
+  pink   #f472b6
+*/
+
+/* ---------- Reading view ---------- */
+
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6 {
+  font-weight: 600;
+}
+
+.markdown-preview-view h1 {
+  color: #7ee787;
+  font-size: 1.7em;
+  font-weight: 700;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #30363d;
+  margin-bottom: 0.5em;
+}
+
+.markdown-preview-view h2 {
+  color: #6CB6FF;
+  font-size: 1.4em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #21262d;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+.markdown-preview-view h3 {
+  color: #D2A8FF;
+  font-size: 1.2em;
+  margin-top: 1.2em;
+  margin-bottom: 0.3em;
+}
+
+.markdown-preview-view h4 {
+  color: #67e8f9;
+  font-size: 1.05em;
+  margin-top: 1.2em;
+  margin-bottom: 0.3em;
+}
+
+.markdown-preview-view h5 {
+  color: #fbbf24;
+  font-size: 0.95em;
+}
+
+.markdown-preview-view h6 {
+  color: #f472b6;
+  font-size: 0.85em;
+}
+
+/* ---------- Live Preview / Source mode ---------- */
+
+.cm-s-obsidian .cm-header-1 { color: #7ee787 !important; font-size: 1.7em; font-weight: 700; }
+.cm-s-obsidian .cm-header-2 { color: #6CB6FF !important; font-size: 1.4em; font-weight: 600; }
+.cm-s-obsidian .cm-header-3 { color: #D2A8FF !important; font-size: 1.2em; font-weight: 600; }
+.cm-s-obsidian .cm-header-4 { color: #67e8f9 !important; font-size: 1.05em; font-weight: 600; }
+.cm-s-obsidian .cm-header-5 { color: #fbbf24 !important; font-size: 0.95em; font-weight: 600; }
+.cm-s-obsidian .cm-header-6 { color: #f472b6 !important; font-size: 0.85em; font-weight: 600; }
+
+/* ---------- Outline ---------- */
+
+.outline .tree-item-inner {
+  text-transform: uppercase;
+}
+
+.outline .tree-item-children .tree-item-inner {
+  text-transform: none;
+}

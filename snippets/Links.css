@@ -1,0 +1,45 @@
+/*
+Links.css — internal and external link colors for GitHub Theme (dark)
+
+Author: VisionJam
+License: MIT
+Designed for: Obsidian 1.6+, GitHub Theme 1.1.6
+*/
+
+/* ---------- Internal links: reading view ---------- */
+
+.markdown-preview-view a.internal-link {
+  color: #818cf8 !important;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(129, 140, 248, 0.2);
+}
+
+.markdown-preview-view a.internal-link:hover {
+  color: #a78bfa !important;
+  border-bottom-color: #818cf8;
+}
+
+/* ---------- Internal links: editor ---------- */
+
+.cm-s-obsidian .cm-hmd-internal-link {
+  color: #818cf8 !important;
+}
+
+/* ---------- Unresolved links ---------- */
+
+.markdown-preview-view .internal-link.is-unresolved {
+  opacity: 0.5;
+}
+
+/* ---------- External links ---------- */
+
+.markdown-preview-view a.external-link {
+  color: #67e8f9 !important;
+  font-weight: 500;
+}
+
+/* GitHub Theme adds an arrow icon; hide it for a cleaner look. */
+.external-link {
+  background-image: none;
+  padding-right: 0;
+}

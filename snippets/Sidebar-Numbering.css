@@ -1,0 +1,37 @@
+/*
+Sidebar-Numbering.css — hierarchical numbering for the outline and file explorer
+
+Author: VisionJam
+License: MIT
+Designed for: Obsidian 1.6+, GitHub Theme 1.1.6
+
+How it works:
+  - Each level container resets its own counter.
+  - Each item increments the counter and prints counters(..., ".").
+  - Do not reset on the outermost container, or you get a leading "0.".
+*/
+
+/* ---------- Outline ---------- */
+
+[data-type="outline"] .tree-item-children {
+  counter-reset: vj-outline;
+}
+
+[data-type="outline"] .tree-item .tree-item-self .tree-item-inner::before {
+  counter-increment: vj-outline;
+  content: counters(vj-outline, ".") " ";
+  color: #8b949e;
+}
+
+/* ---------- File explorer ---------- */
+
+.nav-files-container .nav-folder-children {
+  counter-reset: vj-files;
+}
+
+.nav-files-container .nav-folder-children .nav-file-title::before,
+.nav-files-container .nav-folder-children .nav-folder-title::before {
+  counter-increment: vj-files;
+  content: counters(vj-files, ".") " ";
+  color: #8b949e;
+}

@@ -1,0 +1,13 @@
+/*
+Properties.css — purple property keys for GitHub Theme (dark)
+
+Author: VisionJam
+License: MIT
+Designed for: Obsidian 1.6+, GitHub Theme 1.1.6
+*/
+
+.metadata-property-key,
+.metadata-property-label {
+  color: #d2a8ff !important;
+  font-weight: 600 !important;
+}

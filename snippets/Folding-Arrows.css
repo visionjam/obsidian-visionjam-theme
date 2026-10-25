@@ -1,0 +1,42 @@
+/*
+Folding-Arrows.css — always-visible purple fold arrows for GitHub Theme (dark)
+
+Author: VisionJam
+License: MIT
+Designed for: Obsidian 1.6+, GitHub Theme 1.1.6
+*/
+
+/* ===== 1. Reading View 折叠箭头 ===== */
+.collapse-icon,
+.heading-collapse-indicator {
+  opacity: 1 !important;
+}
+
+.collapse-icon .svg-icon,
+.heading-collapse-indicator .svg-icon {
+  width: 18px !important;
+  height: 18px !important;
+  color: #a78bfa !important;
+  transition: color 0.2s ease;
+}
+
+.collapse-icon:hover .svg-icon,
+.heading-collapse-indicator:hover .svg-icon {
+  color: #c4b5fd !important;
+}
+
+/* ===== 2. Live Preview / Source Mode 折叠指示器 ===== */
+.cm-fold-indicator .collapse-indicator {
+  opacity: 1 !important;
+  color: #a78bfa !important;
+  transition: color 0.2s ease;
+}
+
+.cm-fold-indicator:hover .collapse-indicator {
+  color: #c4b5fd !important;
+}
+
+.cm-fold-indicator:hover {
+  background: rgba(124, 58, 237, 0.1);
+  border-radius: 4px;
+}
