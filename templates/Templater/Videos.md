@@ -16,56 +16,78 @@ tags:
 # 相关笔记：
 
 <%*
-// ===== 内容写完,自动落位 =====
-// ⚠️ 本段在 11 个模板中各有一份完全相同的副本;改动必须 11 处同步(见 templates/README.md 的「落位脚本」一节)
-// ⚠️ 坑:tp.file.path() 返回「系统绝对路径 + 扩展名」,与 vault 相对路径比较恒为不等 → 必须用 tp.file.path(true)
-const TARGET_DIR = "Calendar/Videos";   // ← 每个模板改这一行
-const RENAME_TO  = null;               // ← 有日期命名规则的模板改这里(null = 沿用笔记标题)
+// ===== 落位：把新笔记移到目标目录，并按规则改名 =====
+// ⚠️ 本段在 11 个模板中各有一份完全相同的副本；改动必须 11 处同步（见 README/模板系统-设计 §3）
+// ⚠️ 坑：tp.file.path() 返回「系统绝对路径 + 扩展名」，与 vault 相对路径比较恒为不等 → 必须用 tp.file.path(true)
+const TARGET_DIR = "Calendar/Videos";   // ← 每个模板只改这一行
+const RENAME_TO  = null;   // ← 有日期命名规则的模板改这里（null = 沿用笔记标题）
 
-const currentRel = tp.file.path(true);          // 当前文件的 vault 相对路径(带 .md)
+const currentPath = tp.file.path(true);   // 当前文件在 vault 内的相对路径（含 .md）
 
 // ① 决定最终文件名
 let finalName = RENAME_TO;
 if (!finalName) {
   finalName = tp.file.title;
-  if (/^Untitled( \d+)?$/.test(finalName)) {    // 还没起名 → 问
-    const ans = await tp.system.prompt("这篇笔记叫什么？");
-    finalName = (ans && ans.trim()) ? ans.trim() : "";   // 取消/留空 → 置空
+  if (/^Untitled( \d+)?$/.test(finalName)) {   // 标题还是默认的 Untitled → 问用户
+    const answer = await tp.system.prompt("这篇笔记叫什么？");
+    finalName = (answer && answer.trim()) ? answer.trim() : "";   // 取消或留空 → 放弃落位
   }
 }
 
 if (!finalName) {
-  new tp.obsidian.Notice("已取消落位,文件保持在当前位置", 5000);
+  new tp.obsidian.Notice("已取消落位，文件保持在当前位置", 5000);
 } else {
-  const targetPath = `${TARGET_DIR}/${finalName}`;
-  const targetFile = `${targetPath}.md`;
+  const targetPath = TARGET_DIR + "/" + finalName;   // 不含扩展名，给 tp.file.move 用
+  const targetFile = targetPath + ".md";             // 含扩展名，给路径查询用
 
-  // ② 已在正确位置 → 什么都不做
-  if (currentRel !== targetFile) {
-    const existing = tp.file.find_tfile(targetFile);
-    if (existing) {
-      // ③ 目标已存在 → 提示 + 跳过去 + 清理本次新建的文件
-      const stale = tp.file.find_tfile(currentRel);
-      new tp.obsidian.Notice(`✅ ${finalName} 已存在,已为你打开`, 5000);
+  // ② 已经在正确位置 → 不再移动，交给 Templater 写内容
+  if (currentPath === targetFile) {
+    // 什么都不做
+  } else {
+    // ⚠️ 用 getAbstractFileByPath 而不是 find_tfile：
+    //    find_tfile 是「链接解析」语义（按文件名找候选再比对路径），
+    //    存在性判断需要精确路径，避免同名文件造成误判。
+    const existing = tp.app.vault.getAbstractFileByPath(targetFile);
+
+    if (!existing) {
+      // ③ 目标不存在 → 直接移入 + 改名
+      await moveTo(targetPath);
+    } else if (existing.stat && existing.stat.size === 0) {
+      // ④ 目标是 0 字节空壳（上次模板中断留下的）→ 删掉空壳再落位
+      //    0 字节没有内容可丢，直接永久删除，不制造 .trash 残骸
+      try {
+        await tp.app.vault.delete(existing);
+        await moveTo(targetPath);
+      } catch (e) {
+        new tp.obsidian.Notice("⚠️ 空壳清理失败：" + e.message + "\n请手动删除 " + targetFile + " 后重试", 8000);
+      }
+    } else {
+      // ⑤ 目标已有内容 → 提示 + 跳过去 + 把本次新建的文件丢进回收站
+      new tp.obsidian.Notice("✅ " + finalName + " 已存在，已为你打开", 5000);
+      const currentFile = tp.app.vault.getAbstractFileByPath(currentPath);
       const cleanup = async () => {
         try {
           await tp.app.workspace.getLeaf(false).openFile(existing);
-          if (stale && stale.path !== existing.path) await tp.app.vault.trash(stale, false);
+          if (currentFile && currentFile.path !== existing.path) {
+            await tp.app.vault.trash(currentFile, false);
+          }
         } catch (e) {
-          new tp.obsidian.Notice(`已打开 ${finalName},但临时文件清理失败,请手动删除 ${currentRel}`, 8000);
+          new tp.obsidian.Notice("已打开 " + finalName + "，但临时文件清理失败，请手动删除 " + currentPath, 8000);
         }
       };
-      // 必须等模板渲染结束后再清理:被删的正是"当前正在渲染的文件"
+      // 必须等模板渲染结束后再清理：要删的正是「当前正在渲染的文件」
       if (tp.hooks && tp.hooks.on_all_templates_executed) tp.hooks.on_all_templates_executed(cleanup);
       else setTimeout(cleanup, 500);
-    } else {
-      // ④ 落位:一步完成「移入目录 + 改名」
-      try {
-        await tp.file.move(targetPath);
-      } catch (e) {
-        new tp.obsidian.Notice(`⚠️ 落位失败:${e.message}\n文件仍在 ${currentRel},请手动移动。`, 8000);
-      }
     }
+  }
+}
+
+// 统一的落位动作：一步完成「移入目录 + 改名」
+async function moveTo(destination) {
+  try {
+    await tp.file.move(destination);
+  } catch (e) {
+    new tp.obsidian.Notice("⚠️ 落位失败：" + e.message + "\n文件仍在 " + currentPath + "，请手动移动。", 8000);
   }
 }
 %>
